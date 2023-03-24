@@ -1,0 +1,28 @@
+Annotations
+
+-Annotations are used to provide metadata for Java code. Annotations don't modify the execution of code; however, they can be consumed in order to perform additional logic.
+
+-The @ character signals to the compiler that this is an annotation
+
+-A Java annotation can also have elements for which you can set values.
+ @Entity(table = "vehicles")`
+
+
+
+ @Deprecated - used to indicate that a class, method, or field should no longer be used
+
+
+ @Override - used above methods that are intended to override a method in a superclass. If the method does not match a method in the superclass, the compiler will give you an error.
+
+
+ @SuppressWarnings annotation makes the compiler suppress warnings for a given method. For instance, if a method makes an unchecked type cast, the compiler may generate a warning.
+
+ @SuppressWarnings("unchecked")
+ public List<String> languages() {
+     return new ArrayList();
+ }
+
+
+
+
+ you can make your own annotations

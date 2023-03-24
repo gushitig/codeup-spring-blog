@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--only thing different than a plain html page, just interacting w thymeleaf-->
+<head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+</head>
+<body>
+
+<h1>This is the home page</h1>
+<h1>Hello, <span th:text="${name}">World</span>!</h1>
+<!--World is like a placeholder/default-->
+
+<p>Person's name is <span th:text="${personName}">person name here</span></p>
+
+<p>Person's age is <span th:text="${personAge}">person age here</span></p>
+
+</body>
+</html>

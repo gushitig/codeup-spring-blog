@@ -1,0 +1,58 @@
+Servlets were the backend part and the jsps were the front end part
+
+in spring we're going to use something similar to jsps but a lot simper called views
+    -we will be doing this using thymeleaf
+
+
+
+
+
+    Other Tags
+    each
+    Very similar to the enhanced for-loop syntax in Java, this tag allows us to loop over a collection.
+
+
+    <div th:each="item : ${shoppingCart}">
+        <p th:text="${item.name}" />
+    </div>
+    Documentation
+
+    if
+
+    <div class="alert alert-danger" th:if="${page_has_error}">
+        Something bad happened!
+    </div>
+
+
+
+    TEMPLATING
+    all the partials can go into one html file
+    thymeleaf calls them fragments
+
+
+    <!DOCTYPE html>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head">
+        <meta charset="UTF-8" />
+        <title>Home</title>
+        <!-- include stylesheets, etc here -->
+    </head>
+    <body>
+        <nav th:fragment="navbar">
+            <!-- awesome navbar goes here -->
+        </nav>
+    </body>
+    </html>
+
+add to page by
+    <div th:replace="fragmentfilepath :: my-partial">
+        This div will be *replaced* by the fragment
+    </div>
+OR BY
+    <div th:insert="fragmentfilepath :: my-partial">
+        The entire content of the partial will be *included* inside this div.
+    </div>
+
+
+<div th:insert="fragmentfilepath :: my-partial">
+file name :: which fragment
