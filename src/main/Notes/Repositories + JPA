@@ -1,0 +1,126 @@
+JPA - Java persistence architecture
+connecting objects to database data
+
+spring calls the dao a repository
+
+objects are models in spring
+
+try to get comfortable with SQL, bc spring wont completely replace it
+
+ORM - Object to Relational Mapping
+Ferrying of data back and forth
+
+JPA is a Java specification for accessing, persisting, and managing data between Java objects and a relational database.
+
+application.properties must be in gitignore, if not add it and make sure its not on github
+if its already on git you have to tell it to not track it by removing it from cache:
+git rm --cached src/main/application.properties
+(if you forget the --cached it will delete the file tho, so dont forget it!)
+
+application.properties is taking the place of our config class
+
+Previously, we have created POJOs (Plain old Java objects) as our models, that is, a class that represents data from our database. Now we will use some JPA annotations to formally specify the mapping of our objects to database tables.
+
+@Entity
+public class Dog {
+    /* More code here... */
+}
+
+entity tells spring this is an object thats going to be connected to a db table
+
+@Entity
+public class Dog {
+    @Id //marks as primary id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+}
+(use the jakarta import)
+
+CAN NAME THE TABLE IF YA WANT
+@Entity
+@Table(name="dogs")
+public class Dog {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+}
+standard wise the table should always be the plural but spring makes it singular, so you should always rename yours by using this line
+
+
+ADDING COLUMNS
+@Entity
+@Table(name="dogs")
+public class Dog {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false, length = 1024, unique = true)
+    private String name;
+
+}
+
+this didnt work bc spring will not automatically make changes to your schema.
+it will create a table for you if it didnt exist but if you dont specify, it will fill in gaps w its own default values
+so you will have to make any changes in the actual database, not through spring OR drop the table and recreate it
+
+
+
+
+Repositories
+Similar to DAOs, repositories are an abstraction of interacting with a database.
+
+In Spring, the Data Access Layer, usually implemented in Java using DAOs (Data Access Objects), has a predefined parent class (also called base class) called JpaRepository. We will extend this class and define the type of objects it will be manipulating, as well as the data type of the entity's id.
+
+public interface DogRepository extends JpaRepository<Dog, Long> {
+
+}
+Just by defining an interface that extends JpaRepository, we can start using it in our other classes.
+
+
+Dependency Injection
+
+@Controller
+class AdController {
+
+    // These two next steps are often called dependency injection, where we create a Repository instance and initialize it in the controller class constructor.
+    private final AdRepository adDao;
+
+    public AdController(AdRepository adDao) {
+        this.adDao = adDao;
+    }
+
+    @GetMapping("/ads")
+    public String index(Model model) {
+        model.addAttribute("ads", adDao.findAll());
+        return "ads/index";
+    }
+
+    // ...
+}
+
+or you can use a lombock @AllArgsConstructor and it should add the constructor for you
+
+if a dog youre looking up by id does not exist then redirect to a 404 error page "this dog does not exist"
+
+
+
+public interface AdRepository extends JpaRepository<Ad, Long> {
+    Ad findByTitle(String title); // select * from ads where title = ?
+    Ad findFirstByTitle(String title); // select * from ads where title = ? limit 1
+}
+
+
+
+if its not simple/automatic you can search a query yourself
+
+public interface AdRepository extends JpaRepository<Ad, Long> {
+     // The following method is equivalent to the built in `getById` method, there's no need to create this example
+    @Query("from Ad a where a.id like ?1")
+    Ad getAdById(long id);
+
+    // The following method shows you how to use named parameters in a HQL custom query:
+    @Query("from Ad a where a.title like %:term%")
+    List<Ad> searchByTitleLike(@Param("term") String term);
+}
+second option is bettah

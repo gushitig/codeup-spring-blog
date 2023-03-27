@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="partials :: head" >
+    <title>Dogs</title>
+</head>
+<body>
+
+<h1>Some dogs</h1>
+
+<h1 th:if="${dogs.size() > 0}"><span th:text="${dogs}">(insert dogs here)</span></h1>
+
+<div class="alert alert-danger" th:if="${errMsg}">
+    Something bad happened!
+</div>
+
+<ul th:each="dog : ${dogs}">
+    <li th:text="${dog.name}" >(insert dog name here)</li>
+</ul>
+
+</body>
+</html>
