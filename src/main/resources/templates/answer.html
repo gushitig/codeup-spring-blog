@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Answer</title>
+</head>
+<body>
+
+
+<h1>You guessed number: <span th:text="${guess}">guess here</span></h1>
+
+<h1>The number rolled was: <span th:text="${diceRoll}">dice roll here</span></h1>
+
+<h1 th:text="${msg}"></h1>
+
+//bonus
+<div th:each="roll : ${rolls}">
+<p>
+    Roll was <span th:text="${roll}"></span>
+</p></div>
+
+
+</body>
+</html>
