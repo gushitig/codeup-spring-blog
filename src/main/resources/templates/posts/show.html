@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<div id="flex-container">
+
 <head th:replace="partials/partials :: head">
     <title>Create A Post</title>
 </head>
@@ -9,11 +12,24 @@
 <div th:replace="partials/partials :: navbar">
 </div>
 
-<h1 th:text="${post.title}" >(insert title here)</h1>
-<p th:text="${post.body}" >(insert body here)</p>
-
+<div class = "d-flex flex-column justify-content-center align-items-center">
+    <div class="card m-2 p-2 bg-secondary opacity-75" style="width: 90%;">
+        <div class="card-body">
+            <h4 class="card-title" th:text="${post.title}">(insert title here)</h4>
+            <h6 class="card-subtitle mb-2 text-muted">May 2, 1999</h6>
+            <p class="card-text" th:text="${post.body}">(insert body here)</p>
+            <div style="text-align:right;">
+                <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-pen" style="color: #fbfcfe;"></i></a><a href="#" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-trash-can" style="color: #f7f7f7;"></i></a>
+            </div>
+            <p class="card-text" style="text-align:right;" th:text="${post.blogger.getEmail()}">(insert user email here)</p>
+        </div>
+    </div>
+</div>
 
 <footer th:insert="partials/partials :: footer"></footer>
 
 </body>
+
+</div>
+
 </html>

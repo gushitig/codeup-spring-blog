@@ -1,0 +1,18 @@
+
+
+<input type = "hidden" th:field = "*{id}">
+
+
+
+@PostMapping("/posts/create")
+    public String createPost(@RequestParam(name="titleInput") String titleInput, @RequestParam(name="bodyInput") String bodyInput) {
+        Post post = new Post();
+        post.setTitle(titleInput);
+        post.setBody(bodyInput);
+        User blogger = userDao.getReferenceById(1L);
+        post.setBlogger(blogger);
+
+        postDao.save(post);
+
+        return "redirect:/posts";
+    }

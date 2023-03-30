@@ -1,8 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700');
+
 body {
-    background-color: cornflowerblue;
+    background-color: black;
     background-image: url('../img/freeyourmind.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size : cover;
+}
+
+.card {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.6)!important;
+}
+
+.btn-secondary {
+    background-color: rgba(0, 0, 0, 0.0)!important;
+
+}
+
+.btn-primary {
+    background-color: rgba(0, 0, 0, 0.8)!important;
+
 }
 
 
+html,
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Quicksand", sans-serif;
+    font-size: 12px;
+}
 
+ a {
+    color: #fff;
+}
+
+a:hover {
+    color: #e39a56;
+}
+
+#flex-container {
+    display:flex;
+    flex-direction:column;
+
+    /* fallback height */
+    min-height:100vh;
+
+
+}
+#flex-container > footer {
+    margin-top:auto;
+}
 

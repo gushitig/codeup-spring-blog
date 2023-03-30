@@ -1,0 +1,113 @@
+Previously we talked about how JPA is a specification for manipulating database records with Java objects. In this lesson we will use the ORM (Object to Relational Mapper) facilities of the JPA
+
+An ORM lets us treat our relational data as if it is object-oriented.
+
+
+
+
+
+-can make an entire test class to test methods without the use of a controller
+
+
+
+ONE TO ONE
+
+@Entity
+@Table(name="ads")
+public class Ad {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column
+    private String description;
+
+    @OneToOne
+    private User owner;
+}
+
+
+
+
+
+ONE TO MANY
+@Entity
+@Table(name="ads")
+public class Ad {
+    /* ... */
+
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
+   private List<AdImage> images;
+}
+
+
+
+@Entity
+@Table(name="ad_images")
+public class AdImage {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(nullable = false)
+    private String path;
+
+    @ManyToOne
+    @JoinColumn (name = "ad_id")
+    private Ad ad;
+}
+
+cascade type all is desirable
+
+
+
+MANY TO MANY
+@Entity
+@Table(name="ads")
+public class Ad {
+    /* ... */
+
+   @ManyToMany(cascade = CascadeType.PERSIST)
+   @JoinTable(
+       name="ads_categories",
+       joinColumns={@JoinColumn(name="ad_id")}, //from the category perspective
+       inverseJoinColumns={@JoinColumn(name="category_id")}
+   )
+   private List<AdCategory> categories;
+}
+
+@Entity
+@Table(name="ads")
+public class Ad {
+    /* ... */
+
+   @ManyToMany(cascade = CascadeType.PERSIST)
+   @JoinTable(
+       name="ads_categories",
+       joinColumns={@JoinColumn(name="ad_id")}, //fro, the ads perspective
+       inverseJoinColumns={@JoinColumn(name="category_id")}
+   )
+   private List<AdCategory> categories;
+}
+
+
+cascade type issue - due to all the foreign key relationships, all the records linking them were deleted, parent and child records
+
+SO for many to many relationshoips DONT USE ALL OR REMOVE
+    -use PERSIST
+
+
+
+
+
+
+
+STACK OVERFLOW
+when we try to print out a cat is printing out the owner, and apart of printing out the owner is to print out the cats and it goes on forever
+- this is due to using lombok tostring method
+    -write our own orrrr
+    -use the leave this thing out
+    @ToString.Exclude
+    private List<Cat> cats;

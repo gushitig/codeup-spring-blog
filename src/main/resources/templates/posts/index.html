@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<div id="flex-container">
+
 <head th:replace="partials/partials :: head">
     <title>Create A Post</title>
 </head>
@@ -9,16 +12,41 @@
 <div th:replace="partials/partials :: navbar">
 </div>
 
+<div class="row">
+    <div class="col-8 p-0">
+        <div class = "d-flex flex-column justify-content-center align-items-center">
+            <div class="card m-2 p-2 bg-secondary opacity-75" style="width: 90%;" th:each="post : ${posts}">
+                <div class="card-body">
+                    <a th:href="@{/posts/{id}(id=${post.id})}"><h4 class="card-title" th:text="${post.title}">(insert title here)</h4></a>
+                    <h6 class="card-subtitle mb-2 text-muted">May 2, 1999</h6>
+                    <p class="card-text" th:text="${post.body}">(insert body here)</p>
+                    <div style="text-align:right;">
+                        <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-pen" style="color: #fbfcfe;"></i></a><a href="#" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-trash-can" style="color: #f7f7f7;"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-<div th:each="post : ${posts}">
-    <h1 th:text="${post.title}" >(insert title here)</h1>
-    <p th:text="${post.body}" >(insert body here)</p>
+    <div class="col-4 p-0">
+        <div class="card mt-2 m-0 p-0 bg-secondary opacity-75" style="width: 90%;">
+            <img th:src="@{{path}(path=${blogger.getPhoto()})}" class="userImg" alt="...">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${blogger.getUsername()}">(insert username here)</h5>
+                <p class="card-text"th:text="${blogger.getBio()}">(insert bio here)</p>
+                <div style="text-align:center;">
+                <a href="#" class="btn btn-secondary border border-0"><i class="fa-brands fa-facebook" style="color: #f7f7f7;"></i></a>
+                <a href="#" class="btn btn-secondary border border-0"><i class="fa-brands fa-instagram" style="color: #f7f7f7;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 
 <footer th:insert="partials/partials :: footer"></footer>
 
 </body>
+
+</div>
+
 </html>

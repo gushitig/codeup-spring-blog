@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<div id="flex-container">
 
 <head th:replace="partials/partials :: head">
     <title>Create A Post</title>
@@ -11,29 +12,27 @@
 <div th:replace="partials/partials :: navbar">
 </div>
 
-
-
-<form action="/posts/create" method="post">
-    <div class="form-row align-items-center">
-        <div class="col-auto">
-            <label class="sr-only" for="titleInput">Title</label>
-            <input type="text" class="form-control mb-2" id="titleInput" name="titleInput">
+<form action="/posts/create" method="post" th:object="${post}">
+    <div class="form d-flex flex-column justify-content-center align-items-center">
+        <div class="col-auto w-75 p-0">
+            <label for="title" style="color:white">Title</label>
+            <input type="text" class="form-control mb-2" id="title" th:field="*{title}">
         </div>
-
-        <div class="form-group">
-            <label for="bodyInput">Body</label>
-            <textarea class="form-control" id="bodyInput" name="bodyInput" rows="7"></textarea>
+        <div class="form-group w-75">
+            <label for="body" style="color:white;">Body</label>
+            <textarea class="form-control" id="body" rows="10" th:field="*{body}"></textarea>
         </div>
-
-        <div class="col-auto">
-            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <button type="submit" class="btn btn-primary mb-2 border border-0">Submit</button>
         </div>
     </div>
 </form>
 
-
-
 <footer th:insert="partials/partials :: footer"></footer>
 
 </body>
+
+</div>
+
 </html>

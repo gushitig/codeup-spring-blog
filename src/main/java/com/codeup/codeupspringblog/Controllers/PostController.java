@@ -2,8 +2,11 @@ package com.codeup.codeupspringblog.Controllers;
 
 import com.codeup.codeupspringblog.Repositories.DogRepository;
 import com.codeup.codeupspringblog.Repositories.PostRepository;
+import com.codeup.codeupspringblog.Repositories.UserRepository;
+import com.codeup.codeupspringblog.Services.EmailService;
 import com.codeup.codeupspringblog.models.Dog;
 import com.codeup.codeupspringblog.models.Post;
+import com.codeup.codeupspringblog.models.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +19,15 @@ import java.util.List;
 @Controller
 class PostController {
     private final PostRepository postDao;
+    private final UserRepository userDao;
+    private final EmailService emailService;
 
     @GetMapping("/posts")
     public String postIndex(Model model) {
         List<Post> posts = postDao.findAll();
         model.addAttribute("posts", posts);
+        User blogger = userDao.getReferenceById(1L);
+        model.addAttribute("blogger", blogger);
 
         return "posts/index";
     }
@@ -30,25 +37,42 @@ class PostController {
         Post post = postDao.findById(id).get();
         model.addAttribute("post", post);
 
+
         return "posts/show";
     }
 
     @GetMapping("/posts/create")
-    public String createPostGet() {
+    public String createPostGet(Model model) {
+        model.addAttribute("post", new Post());
+        Post post = new Post();
+        post.setTitle("Title here");
+        post.setBody("Body here");
+        model.addAttribute("post", post);
 
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam(name="titleInput") String titleInput, @RequestParam(name="bodyInput") String bodyInput) {
-        Post post = new Post();
-        post.setTitle(titleInput);
-        post.setBody(bodyInput);
+    public String createPost(@ModelAttribute Post post) {
+        /*Post post = new Post();
+        post.setTitle(title);
+        post.setBody(body);*/
+        User blogger = userDao.getReferenceById(1L);
+        post.setBlogger(blogger);
 
         postDao.save(post);
 
+        emailService.prepareAndSend(post, "A post has been created" + post.getTitle(), post.toString());
+
         return "redirect:/posts";
     }
+
+    @GetMapping("/posts/edit/{id}")
+    public String showEditForm(@PathVariable long id, Model model) {
+        model.addAttribute("post", postDao.findPostById(id));
+        return "posts/create";
+    }
+
 
 
 

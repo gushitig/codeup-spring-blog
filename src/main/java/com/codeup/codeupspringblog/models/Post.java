@@ -22,4 +22,8 @@ public class Post {
     @Column(length=10000, nullable = false)
     private String body;
 
+    @ManyToOne
+    @JoinColumn (name = "blogger_id")
+    private User blogger;
+
 }
