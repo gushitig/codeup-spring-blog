@@ -68,7 +68,7 @@ class PostController {
         return "redirect:/posts";
     }
 
-    @GetMapping("/posts/edit/{id}")
+    @GetMapping("/posts/{id}/edit")
     public String showEditForm(@PathVariable long id, Model model) {
         model.addAttribute("post", postDao.findPostById(id));
         return "posts/create";

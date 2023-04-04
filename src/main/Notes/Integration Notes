@@ -1,0 +1,17 @@
+The main purpose of an Integration Test is to verify the interaction between the MVC units. That's why we will instruct JUnit to do some of the following:
+
+Provide a full servlet engine behavior
+Load the @Controllers
+Load the @Services
+Load the @Repositories
+
+
+-do this in a test folder
+
+
+
+JUnit requires you to specify at least three things:
+
+@RunWith(SpringRunner.class): SpringRunner is an alias for the SpringJUnit4ClassRunner, which joins the JUnit testing library with the Spring TestContext Framework.
+@SpringBootTest(classes = SpringblogApplication.class): This annotation tells the framework which Java Class with a main method starts the application. You can find this file under a path like this /src/main/java/com/codeup/springblog/SpringblogApplication.java. The name could be different from this example; it depends on your initial configuration and project purpose.
+@AutoConfigureMockMvc: This is an annotation that can be applied to a test class to enable and configure auto-configuration of MockMvc.

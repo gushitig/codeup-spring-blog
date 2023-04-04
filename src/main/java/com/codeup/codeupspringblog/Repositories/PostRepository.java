@@ -8,6 +8,8 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     Post findPostById(long id);
+
+    Post findByTitle(String title);
     //List<Post> findByTitle(String title);
 
 }
