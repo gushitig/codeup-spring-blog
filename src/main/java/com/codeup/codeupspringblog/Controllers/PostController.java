@@ -8,6 +8,7 @@ import com.codeup.codeupspringblog.models.Dog;
 import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.models.User;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ class PostController {
     public String postIndex(Model model) {
         List<Post> posts = postDao.findAll();
         model.addAttribute("posts", posts);
-        User blogger = userDao.getReferenceById(1L);
-        model.addAttribute("blogger", blogger);
+        User user = userDao.getReferenceById(5L);
+        model.addAttribute("user", user);
 
         return "posts/index";
     }
@@ -57,8 +58,8 @@ class PostController {
         /*Post post = new Post();
         post.setTitle(title);
         post.setBody(body);*/
-        User blogger = userDao.getReferenceById(1L);
-        post.setBlogger(blogger);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        post.setBlogger(user);
 
         postDao.save(post);
 
@@ -73,7 +74,15 @@ class PostController {
         return "posts/create";
     }
 
-
+    /*private User getLoggedInUser() {
+        User blogger = new User();
+        try {
+            blogger = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch {
+            blogger = "";
+        }
+        return blogger;
+    }*/
 
 
 

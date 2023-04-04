@@ -1,0 +1,55 @@
+src/main/java
+└── com
+    └── codeup
+        ├── controllers
+        │   ├── UserController.java
+        │   └── AuthenticationController.java
+        ├── models
+        │   ├── User.java
+        │   └── UserWithRoles.java
+        ├── repositories
+        │   └── UserRepository.java
+        ├── SecurityConfiguration.java
+        └── services
+            └── UserDetailsLoader.java
+
+-add dependencies to pom file
+-Add constructor to User
+-UserWithR0les class - even if we're not using it we still have to have it for spring security
+-create user repository
+-the spring service
+STOPPED HERE
+-configuration - put the most restrictive ones first, bc the order in which things are specified are important
+
+
+
+
+whenever theres an issue with security stuff it hides it with the default access denied page, so you have to really rely on the console
+
+
+if you want to access the user info to display the user name or something
+
+Object loggedInUser = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+if (loggedInUSer.getName() == null) {
+loggedInUSer.setName("");
+}
+model.addAttribute("username", loggedInUSer.getName());
+
+dont forget to add
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      if accessing any security (user info) stuff on the html page
+
+
+
+if youre logged in it will show the following, otherwise they wont show (log out button for example)
+<div sec:authorize="isAuthenticated()">
+  This content is only shown to authenticated users.
+
+  User ID: <span th:text="${#authentication.principal.id}"/>
+  Username: <span th:text="${#authentication.principal.username}"/>
+  Email: <span th:text="${#authentication.principal.email}"/>
+</div>
+
+
