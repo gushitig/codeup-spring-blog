@@ -26,7 +26,7 @@ All posts
                     <h6 class="card-subtitle mb-2 text-muted">May 2, 1999</h6>
                     <p class="card-text" th:text="${post.body}">(insert body here)</p>
                     <div style="text-align:right;">
-                        <a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-pen" style="color: #fbfcfe;"></i></a><a href="#" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-trash-can" style="color: #f7f7f7;"></i></a>
+                        <a th:href="@{/posts/{id}/edit (id=${post.id})}" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-pen" style="color: #fbfcfe;"></i></a><a th:href="@{/posts/{id}/delete(id=${post.id})}" class="btn btn-secondary p-2 border border-0" style="font-size: 13px"><i class="fa-solid fa-trash-can" style="color: #f7f7f7;"></i></a>
                     </div>
                 </div>
             </div>
