@@ -74,6 +74,12 @@ class PostController {
         return "posts/create";
     }
 
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable long id) {
+        postDao.deleteById(id);
+        return "redirect:/posts";
+    }
+
     /*private User getLoggedInUser() {
         User blogger = new User();
         try {
